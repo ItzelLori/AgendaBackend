@@ -87,3 +87,199 @@ INSERT INTO `Administradores` (`Nombre`, `usuario`, `contraseña`) VALUES
 INSERT INTO `CursosImpartidos` (`curso`, `instructor`) VALUES
 (1, 1), -- Juan Pérez imparte Cálculo I
 (2, 2); -- Ana García imparte Física Cuántica Avanzada
+
+
+USE tutorias;
+
+
+USE tutorias;
+
+-- Borrar registros de las tablas que dependen de otras primero
+DELETE FROM CursosInscritos;
+DELETE FROM CursosImpartidos;
+
+-- Borrar registros de las tablas que no dependen de otras
+DELETE FROM Curso;
+DELETE FROM Alumno;
+DELETE FROM Profesor;
+DELETE FROM Administradores;
+
+ALTER TABLE CursosInscritos AUTO_INCREMENT = 1;
+ALTER TABLE CursosImpartidos AUTO_INCREMENT = 1;
+ALTER TABLE Curso AUTO_INCREMENT = 1;
+ALTER TABLE Alumno AUTO_INCREMENT = 1;
+ALTER TABLE Profesor AUTO_INCREMENT = 1;
+ALTER TABLE Administradores AUTO_INCREMENT = 1;
+
+-- Borrar registros de las tablas que dependen de otras primero
+TRUNCATE TABLE CursosInscritos;
+TRUNCATE TABLE CursosImpartidos;
+
+-- Borrar registros de las tablas que no dependen de otras
+TRUNCATE TABLE Curso;
+TRUNCATE TABLE Alumno;
+TRUNCATE TABLE Profesor;
+TRUNCATE TABLE Administradores;
+
+
+
+
+
+CREATE DATABASE tutorias;
+USE tutorias;
+
+-- Añadir columnas de auditoría a las tablas existentes
+ALTER TABLE Profesor 
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN created_at DATETIME,
+ADD COLUMN updated_by VARCHAR(255),
+ADD COLUMN updated_at DATETIME;
+
+ALTER TABLE Curso 
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN created_at DATETIME,
+ADD COLUMN updated_by VARCHAR(255),
+ADD COLUMN updated_at DATETIME;
+
+ALTER TABLE Alumno 
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN created_at DATETIME,
+ADD COLUMN updated_by VARCHAR(255),
+ADD COLUMN updated_at DATETIME;
+
+ALTER TABLE CursosInscritos 
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN created_at DATETIME,
+ADD COLUMN updated_by VARCHAR(255),
+ADD COLUMN updated_at DATETIME;
+
+ALTER TABLE Administradores 
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN created_at DATETIME,
+ADD COLUMN updated_by VARCHAR(255),
+ADD COLUMN updated_at DATETIME;
+
+ALTER TABLE CursosImpartidos 
+ADD COLUMN created_by VARCHAR(255),
+ADD COLUMN created_at DATETIME,
+ADD COLUMN updated_by VARCHAR(255),
+ADD COLUMN updated_at DATETIME;
+
+
+-- Triggers para la tabla Profesor
+DELIMITER //
+
+CREATE TRIGGER before_insert_Profesor
+BEFORE INSERT ON Profesor
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+    SET NEW.created_by = CURRENT_USER();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+CREATE TRIGGER before_update_Profesor
+BEFORE UPDATE ON Profesor
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+-- Triggers para la tabla Curso
+CREATE TRIGGER before_insert_Curso
+BEFORE INSERT ON Curso
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+    SET NEW.created_by = CURRENT_USER();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+CREATE TRIGGER before_update_Curso
+BEFORE UPDATE ON Curso
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+-- Triggers para la tabla Alumno
+CREATE TRIGGER before_insert_Alumno
+BEFORE INSERT ON Alumno
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+    SET NEW.created_by = CURRENT_USER();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+CREATE TRIGGER before_update_Alumno
+BEFORE UPDATE ON Alumno
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+-- Triggers para la tabla CursosInscritos
+CREATE TRIGGER before_insert_CursosInscritos
+BEFORE INSERT ON CursosInscritos
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+    SET NEW.created_by = CURRENT_USER();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+CREATE TRIGGER before_update_CursosInscritos
+BEFORE UPDATE ON CursosInscritos
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+-- Triggers para la tabla Administradores
+CREATE TRIGGER before_insert_Administradores
+BEFORE INSERT ON Administradores
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+    SET NEW.created_by = CURRENT_USER();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+CREATE TRIGGER before_update_Administradores
+BEFORE UPDATE ON Administradores
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+-- Triggers para la tabla CursosImpartidos
+CREATE TRIGGER before_insert_CursosImpartidos
+BEFORE INSERT ON CursosImpartidos
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+    SET NEW.updated_at = NOW();
+    SET NEW.created_by = CURRENT_USER();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+CREATE TRIGGER before_update_CursosImpartidos
+BEFORE UPDATE ON CursosImpartidos
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+    SET NEW.updated_by = CURRENT_USER();
+END //
+
+DELIMITER ;
